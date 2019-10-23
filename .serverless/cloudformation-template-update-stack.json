@@ -19,37 +19,37 @@
     "CreateLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-create"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-create"
       }
     },
     "GetLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-get"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-get"
       }
     },
     "ListLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-list"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-list"
       }
     },
     "UpdateLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-update"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-update"
       }
     },
     "DeleteLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-delete"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-delete"
       }
     },
     "BillingLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/notes-app-api-dev-billing"
+        "LogGroupName": "/aws/lambda/notes-app-api-prod-billing"
       }
     },
     "IamRoleLambdaExecution": {
@@ -77,7 +77,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "dev",
+                  "prod",
                   "notes-app-api",
                   "lambda"
                 ]
@@ -93,7 +93,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-prod*:*"
                     }
                   ]
                 },
@@ -104,7 +104,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-prod*:*:*"
                     }
                   ]
                 },
@@ -138,7 +138,7 @@
             "-",
             [
               "notes-app-api",
-              "dev",
+              "prod",
               {
                 "Ref": "AWS::Region"
               },
@@ -148,6 +148,82 @@
         }
       }
     },
+    "EnterpriseLogAccessIamRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::802587217904:root"
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "StringEquals": {
+                  "sts:ExternalId": "ServerlessEnterprise-xFHSKpGnR8yKVHqZ9Y"
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "LogFilterAccess",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:FilterLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "CreateLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "GetLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "ListLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "UpdateLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "DeleteLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "BillingLogGroup",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "CreateLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -155,10 +231,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/create.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/create.zip"
         },
-        "FunctionName": "notes-app-api-dev-create",
-        "Handler": "create.main",
+        "FunctionName": "notes-app-api-prod-create",
+        "Handler": "s_create.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -170,7 +246,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -181,14 +257,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateLambdaVersionuKF1xYi87iaBArjdP6Hee2dDsVbczyxkxpTqK4su4": {
+    "CreateLambdaVersionPywn3IdiNeKYluIaRiBcNSs1umyFKVpoI2wStMyGE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateLambdaFunction"
         },
-        "CodeSha256": "PL94KTLaIXwsFtvTEoY8PY/Qg9MCCO1NBdv+ffLQ8KU="
+        "CodeSha256": "MdXCp82PcbXToHF0nfWELeCnGC5MOwTxvSaXPBA9HJk="
       }
     },
     "GetLambdaFunction": {
@@ -198,10 +274,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/get.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/get.zip"
         },
-        "FunctionName": "notes-app-api-dev-get",
-        "Handler": "get.main",
+        "FunctionName": "notes-app-api-prod-get",
+        "Handler": "s_get.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -213,7 +289,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -224,14 +300,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetLambdaVersionyELnkBFAU0AiiCTzxIJmOcgn6sswXU3E6O0IPPVhSYU": {
+    "GetLambdaVersionfUIBs0WsFMGkogczCqkPen3b5fwjG8Gd0wG6wkB7E": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetLambdaFunction"
         },
-        "CodeSha256": "fpuD8ZO9QCGvRcFekzrey00HRcKIyF2iMuYOa94bqSc="
+        "CodeSha256": "CzGQQpsfp1gtJDNKPCoto9/strcEj5nYMDkAcVa4BLc="
       }
     },
     "ListLambdaFunction": {
@@ -241,10 +317,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/list.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/list.zip"
         },
-        "FunctionName": "notes-app-api-dev-list",
-        "Handler": "list.main",
+        "FunctionName": "notes-app-api-prod-list",
+        "Handler": "s_list.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -256,7 +332,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -267,14 +343,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "ListLambdaVersionTa0bdVi4z4vNraB58FsFcnubJ2NbsoeXmSOQTNQw": {
+    "ListLambdaVersionj6BxbWVwZZLPXVnj6ATaGBLCaRvFnWoahGe1OafhdE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ListLambdaFunction"
         },
-        "CodeSha256": "fmKa24X2kOXSwu1EG2mcFcWzmXAvgTHsQ/p516vvDOY="
+        "CodeSha256": "U4eUwAsK+Wi51chPigMs4b+Uhi9ck6ilnAE+Zx0oG4c="
       }
     },
     "UpdateLambdaFunction": {
@@ -284,10 +360,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/update.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/update.zip"
         },
-        "FunctionName": "notes-app-api-dev-update",
-        "Handler": "update.main",
+        "FunctionName": "notes-app-api-prod-update",
+        "Handler": "s_update.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -299,7 +375,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -310,14 +386,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateLambdaVersionbwazJ2gjY0v8eg9wnXXKHlI4pdJit7zKMSz85qnp8": {
+    "UpdateLambdaVersionkz0YHuYNx0r5bEFBhc0cj0rMXB8FJvDJgthyS8xRsc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateLambdaFunction"
         },
-        "CodeSha256": "P5X7tJUdkGA1c6E/RwNQjD3zg8Z6e8/fynMvIBpx6QQ="
+        "CodeSha256": "y9uYK1gWpBkB2a92A//sifQwjBWt7/7nIRNSBw802Gc="
       }
     },
     "DeleteLambdaFunction": {
@@ -327,10 +403,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/delete.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/delete.zip"
         },
-        "FunctionName": "notes-app-api-dev-delete",
-        "Handler": "delete.main",
+        "FunctionName": "notes-app-api-prod-delete",
+        "Handler": "s_delete.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -342,7 +418,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -353,14 +429,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteLambdaVersionwY9lnGqLd32buwcsrKEzVasWZJwrc12gyRKwrite2Vs": {
+    "DeleteLambdaVersionlv86oVsm6LCBx7BFFpBrS5FVVJWIOobODmjuHp4Y8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteLambdaFunction"
         },
-        "CodeSha256": "E6l6YqTXoEG5PtY7rPgbYBNjTGIws+9287mAqmDQrC4="
+        "CodeSha256": "SHZenRPdhJ44N38CIhmKTxM2Y6UfL6WRRgMCHk282ZU="
       }
     },
     "BillingLambdaFunction": {
@@ -370,10 +446,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/notes-app-api/dev/1571783748374-2019-10-22T22:35:48.374Z/billing.zip"
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/billing.zip"
         },
-        "FunctionName": "notes-app-api-dev-billing",
-        "Handler": "billing.main",
+        "FunctionName": "notes-app-api-prod-billing",
+        "Handler": "s_billing.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -385,7 +461,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "tableName": "dev-notes",
+            "tableName": "prod-notes",
             "stripeSecretKey": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL",
             "STRIPE_SECRET_KEY": "sk_test_8ag0sm6T1bwO9PgcXuOueGr700owJ3R7GL"
           }
@@ -396,20 +472,20 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "BillingLambdaVersionPtMzIIZl6rOh65R1Mgcs7H1daByWEV9qTH9tR8lDo": {
+    "BillingLambdaVersionqx02FTPw7Cvls4Gu0Xbgc2CLoDeklNjn3QWellviccw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BillingLambdaFunction"
         },
-        "CodeSha256": "Q7bRZU/DE569LvM/SkfrxopNP3ef4UZfmT4z7VHgZjc="
+        "CodeSha256": "0dBkzjZv+e0Z/Fk0u+jOQH9diTZwyVqek3owDS4BSpY="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-notes-app-api",
+        "Name": "prod-notes-app-api",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -858,13 +934,13 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1571783741647": {
+    "ApiGatewayDeployment1571847960014": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "prod"
       },
       "DependsOn": [
         "ApiGatewayMethodNotesOptions",
@@ -1100,6 +1176,118 @@
         }
       }
     },
+    "ApiGatewayLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/api-gateway/notes-app-api-prod"
+      }
+    },
+    "CustomApiGatewayAccountCloudWatchRole": {
+      "Type": "Custom::ApiGatewayAccountRole",
+      "Version": 1,
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomDashresourceDashapigwDashcwDashroleLambdaFunction",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "CustomDashresourceDashapigwDashcwDashroleLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/notes-app-api/prod/1571847972468-2019-10-23T16:26:12.468Z/custom-resources.zip"
+        },
+        "FunctionName": "notes-app-api-prod-custom-resource-apigw-cw-role",
+        "Handler": "apiGatewayCloudWatchRole/handler.handler",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleCustomResourcesLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs10.x",
+        "Timeout": 180
+      },
+      "DependsOn": [
+        "IamRoleCustomResourcesLambdaExecution"
+      ]
+    },
+    "IamRoleCustomResourcesLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "prod",
+                  "notes-app-api",
+                  "custom-resources-lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Resource": {
+                    "Fn::Join": [
+                      ":",
+                      [
+                        "arn:aws:iam:",
+                        {
+                          "Ref": "AWS::AccountId"
+                        },
+                        "role/*"
+                      ]
+                    ]
+                  },
+                  "Action": [
+                    "iam:AttachRolePolicy",
+                    "iam:CreateRole",
+                    "iam:ListAttachedRolePolicies",
+                    "iam:PassRole"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:apigateway:*::/account",
+                  "Action": [
+                    "apigateway:GET",
+                    "apigateway:PATCH"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "GatewayResponseDefault4XX": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
@@ -1129,7 +1317,7 @@
     "NotesTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TableName": "dev-notes",
+        "TableName": "prod-notes",
         "AttributeDefinitions": [
           {
             "AttributeName": "userId",
@@ -1181,7 +1369,7 @@
     "CognitoUserPool": {
       "Type": "AWS::Cognito::UserPool",
       "Properties": {
-        "UserPoolName": "dev-user-pool",
+        "UserPoolName": "prod-user-pool",
         "UsernameAttributes": [
           "email"
         ],
@@ -1193,7 +1381,7 @@
     "CognitoUserPoolClient": {
       "Type": "AWS::Cognito::UserPoolClient",
       "Properties": {
-        "ClientName": "dev-user-pool-client",
+        "ClientName": "prod-user-pool-client",
         "UserPoolId": {
           "Ref": "CognitoUserPool"
         },
@@ -1206,7 +1394,7 @@
     "CognitoIdentityPool": {
       "Type": "AWS::Cognito::IdentityPool",
       "Properties": {
-        "IdentityPoolName": "devIdentityPool",
+        "IdentityPoolName": "prodIdentityPool",
         "AllowUnauthenticatedIdentities": false,
         "CognitoIdentityProviders": [
           {
@@ -1337,6 +1525,76 @@
           }
         ]
       }
+    },
+    "CloudWatchLogsSubscriptionFilterCreateLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "CreateLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterGetLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "GetLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterListLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "ListLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterUpdateLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "UpdateLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterDeleteLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "DeleteLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterBillingLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "BillingLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterApiGatewayLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#prod",
+        "FilterPattern": "\"SLS_ACCESS_LOG\"",
+        "LogGroupName": {
+          "Ref": "ApiGatewayLogGroup"
+        }
+      }
     }
   },
   "Outputs": {
@@ -1345,40 +1603,48 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
+    "EnterpriseLogAccessIamRole": {
+      "Value": {
+        "Fn::GetAtt": [
+          "EnterpriseLogAccessIamRole",
+          "Arn"
+        ]
+      }
+    },
     "CreateLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateLambdaVersionuKF1xYi87iaBArjdP6Hee2dDsVbczyxkxpTqK4su4"
+        "Ref": "CreateLambdaVersionPywn3IdiNeKYluIaRiBcNSs1umyFKVpoI2wStMyGE"
       }
     },
     "GetLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetLambdaVersionyELnkBFAU0AiiCTzxIJmOcgn6sswXU3E6O0IPPVhSYU"
+        "Ref": "GetLambdaVersionfUIBs0WsFMGkogczCqkPen3b5fwjG8Gd0wG6wkB7E"
       }
     },
     "ListLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ListLambdaVersionTa0bdVi4z4vNraB58FsFcnubJ2NbsoeXmSOQTNQw"
+        "Ref": "ListLambdaVersionj6BxbWVwZZLPXVnj6ATaGBLCaRvFnWoahGe1OafhdE"
       }
     },
     "UpdateLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateLambdaVersionbwazJ2gjY0v8eg9wnXXKHlI4pdJit7zKMSz85qnp8"
+        "Ref": "UpdateLambdaVersionkz0YHuYNx0r5bEFBhc0cj0rMXB8FJvDJgthyS8xRsc"
       }
     },
     "DeleteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteLambdaVersionwY9lnGqLd32buwcsrKEzVasWZJwrc12gyRKwrite2Vs"
+        "Ref": "DeleteLambdaVersionlv86oVsm6LCBx7BFFpBrS5FVVJWIOobODmjuHp4Y8"
       }
     },
     "BillingLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BillingLambdaVersionPtMzIIZl6rOh65R1Mgcs7H1daByWEV9qTH9tR8lDo"
+        "Ref": "BillingLambdaVersionqx02FTPw7Cvls4Gu0Xbgc2CLoDeklNjn3QWellviccw"
       }
     },
     "ServiceEndpoint": {
@@ -1399,7 +1665,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/prod"
           ]
         ]
       }
