@@ -25,3 +25,6 @@ https://reactjs.org/
 
 React Bootstrap
 https://react-bootstrap.github.io/
+
+Jira
+https://grouper.atlassian.net/secure/MyJiraHome.jspa
