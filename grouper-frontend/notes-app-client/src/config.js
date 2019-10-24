@@ -1,5 +1,6 @@
 export default {
   MAX_ATTACHMENT_SIZE: 5000000,
+  STRIPE_KEY: "pk_test_KCrcdENJZiwIMdnnvNm9MceS00t2PjCLaK",
   s3: {
     REGION: "us-east-2",
     BUCKET: "grouper-notes-uploads"
