@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "notes-app-2-api",
+    "service": "notes-app-api",
     "serviceObject": {
-      "name": "notes-app-2-api"
+      "name": "notes-app-api"
     },
     "provider": {
       "stage": "dev",
@@ -58,37 +58,37 @@
           "CreateLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-create"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-create"
             }
           },
           "GetLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-get"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-get"
             }
           },
           "ListLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-list"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-list"
             }
           },
           "UpdateLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-update"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-update"
             }
           },
           "DeleteLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-delete"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-delete"
             }
           },
           "BillingLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/notes-app-2-api-dev-billing"
+              "LogGroupName": "/aws/lambda/notes-app-api-dev-billing"
             }
           },
           "IamRoleLambdaExecution": {
@@ -117,7 +117,7 @@
                       "-",
                       [
                         "dev",
-                        "notes-app-2-api",
+                        "notes-app-api",
                         "lambda"
                       ]
                     ]
@@ -132,7 +132,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-2-api-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-dev*:*"
                           }
                         ]
                       },
@@ -143,7 +143,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-2-api-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/notes-app-api-dev*:*:*"
                           }
                         ]
                       },
@@ -159,7 +159,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "notes-app-2-api",
+                    "notes-app-api",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -253,9 +253,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/create.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/create.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-create",
+              "FunctionName": "notes-app-api-dev-create",
               "Handler": "s_create.handler",
               "MemorySize": 1024,
               "Role": {
@@ -277,14 +277,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "CreateLambdaVersionoUZZ9KfHwgWWIh3o8AecnwXnqlIcoe72VrXxa8HqB94": {
+          "CreateLambdaVersionAL3FCmFERaTicrPVYInOyjkZNpaiGqhV0WHAl1TvHzo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateLambdaFunction"
               },
-              "CodeSha256": "LVsSGX2PBBwMJBXOsW/2Bneu5/m1H6IzpK1hGAGR6+o="
+              "CodeSha256": "o3PH5iiLa8Preuc5KcAN9JNGgDPaTWGWDDRsiOOw840="
             }
           },
           "GetLambdaFunction": {
@@ -294,9 +294,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/get.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/get.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-get",
+              "FunctionName": "notes-app-api-dev-get",
               "Handler": "s_get.handler",
               "MemorySize": 1024,
               "Role": {
@@ -318,14 +318,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetLambdaVersionuFnfwXSLtME90g9bq7eRHoNgGLsDWhd8FmNot21sk": {
+          "GetLambdaVersionBmhaWo7dkmi2SRXfeu35n5aakX3d795bPP8dqUfqYI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetLambdaFunction"
               },
-              "CodeSha256": "lcLl67B/NC65J6t96QuKlTYZkVq213qiPBbF4SdWRiY="
+              "CodeSha256": "EAW5OcsQbBka79jZz5IUazbGH5WA3shodkWPvPEiZVg="
             }
           },
           "ListLambdaFunction": {
@@ -335,9 +335,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/list.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/list.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-list",
+              "FunctionName": "notes-app-api-dev-list",
               "Handler": "s_list.handler",
               "MemorySize": 1024,
               "Role": {
@@ -359,14 +359,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "ListLambdaVersiontgvvaSoqY8GyukNBUZkDWZoByAoqVhXGSBIrRNnRWsM": {
+          "ListLambdaVersionAoBFoyQvpesglSREDGlNCmoHFGXllIcj3nCNAhH7Rb8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ListLambdaFunction"
               },
-              "CodeSha256": "o0fPyy89xFPcTmNgW7QQvwuJfmJG9Vbav+Uufb4fm4E="
+              "CodeSha256": "lLz+Axi1IInJQoO4GICRXjEmfo3sHdfmIFl5PTJw2iA="
             }
           },
           "UpdateLambdaFunction": {
@@ -376,9 +376,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/update.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/update.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-update",
+              "FunctionName": "notes-app-api-dev-update",
               "Handler": "s_update.handler",
               "MemorySize": 1024,
               "Role": {
@@ -400,14 +400,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "UpdateLambdaVersionOe2o6ixAprnQ8F1ehY4VJHWvHTDfelMzYMvMkvAAY": {
+          "UpdateLambdaVersionxLnQHJDryiMkfue92mgKrs7VLFA6koUe659Z3T62Kls": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateLambdaFunction"
               },
-              "CodeSha256": "ygyPiVRpKhg1t6hhbQOjNDc8AHomBxfsETAjgQCO5oo="
+              "CodeSha256": "b3lDLbVUthHgrhqtioZPxsK05LGhq7NT6qPyfCGDQIs="
             }
           },
           "DeleteLambdaFunction": {
@@ -417,9 +417,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/delete.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/delete.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-delete",
+              "FunctionName": "notes-app-api-dev-delete",
               "Handler": "s_delete.handler",
               "MemorySize": 1024,
               "Role": {
@@ -441,14 +441,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteLambdaVersiongucmoDaVZnpm9TrdLks8brj183T7oQLqY6VbFvmZ2Q": {
+          "DeleteLambdaVersionJlaQ32GNfP2lTpU4OlZJdOxW6Ob0A0CUvyNWTel49Io": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteLambdaFunction"
               },
-              "CodeSha256": "tPV+V1M7k2knhsVRdAamMTFCe9b5LetkNxGOMnYocwg="
+              "CodeSha256": "SfkQyIILq9lxEU2XoIbNET9lSgmjCKOxTiIsI3+rXGo="
             }
           },
           "BillingLambdaFunction": {
@@ -458,9 +458,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/billing.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/billing.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-billing",
+              "FunctionName": "notes-app-api-dev-billing",
               "Handler": "s_billing.handler",
               "MemorySize": 1024,
               "Role": {
@@ -482,20 +482,20 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "BillingLambdaVersionoFKQFQGhTZzaOmM8PCQPmCCDN7jst4CBgHWLLHOwj1k": {
+          "BillingLambdaVersionu6aAoVtfkMQdqE0qC3nQMoK9Ak3kuX60EEa5RQSak": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "BillingLambdaFunction"
               },
-              "CodeSha256": "sIOUdbENAjPGCE6aizVJtv9G3xdZbnpqtDHqHq0Rk/w="
+              "CodeSha256": "AdeEe8uaQhGLEE9AzoZvynn5GmHEkQRGVvSNyQ8WsBY="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-notes-app-2-api",
+              "Name": "dev-notes-app-api",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -944,7 +944,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1572289130553": {
+          "ApiGatewayDeployment1572291833165": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1189,7 +1189,7 @@
           "ApiGatewayLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/api-gateway/notes-app-2-api-dev"
+              "LogGroupName": "/aws/api-gateway/notes-app-api-dev"
             }
           },
           "CustomApiGatewayAccountCloudWatchRole": {
@@ -1211,9 +1211,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z/custom-resources.zip"
+                "S3Key": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z/custom-resources.zip"
               },
-              "FunctionName": "notes-app-2-api-dev-custom-resource-apigw-cw-role",
+              "FunctionName": "notes-app-api-dev-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
               "MemorySize": 1024,
               "Role": {
@@ -1255,7 +1255,7 @@
                       "-",
                       [
                         "dev",
-                        "notes-app-2-api",
+                        "notes-app-api",
                         "custom-resources-lambda"
                       ]
                     ]
@@ -1539,7 +1539,7 @@
           "CloudWatchLogsSubscriptionFilterCreateLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "CreateLogGroup"
@@ -1549,7 +1549,7 @@
           "CloudWatchLogsSubscriptionFilterGetLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "GetLogGroup"
@@ -1559,7 +1559,7 @@
           "CloudWatchLogsSubscriptionFilterListLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "ListLogGroup"
@@ -1569,7 +1569,7 @@
           "CloudWatchLogsSubscriptionFilterUpdateLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "UpdateLogGroup"
@@ -1579,7 +1579,7 @@
           "CloudWatchLogsSubscriptionFilterDeleteLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "DeleteLogGroup"
@@ -1589,7 +1589,7 @@
           "CloudWatchLogsSubscriptionFilterBillingLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "BillingLogGroup"
@@ -1599,7 +1599,7 @@
           "CloudWatchLogsSubscriptionFilterApiGatewayLogGroup": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-2-api#dev",
+              "DestinationArn": "arn:aws:logs:us-east-2:802587217904:destination:xFHSKpGnR8yKVHqZ9Y#srdsJkhFcttmRgl1hc#notes-app-api#dev",
               "FilterPattern": "\"SLS_ACCESS_LOG\"",
               "LogGroupName": {
                 "Ref": "ApiGatewayLogGroup"
@@ -1624,37 +1624,37 @@
           "CreateLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateLambdaVersionoUZZ9KfHwgWWIh3o8AecnwXnqlIcoe72VrXxa8HqB94"
+              "Ref": "CreateLambdaVersionAL3FCmFERaTicrPVYInOyjkZNpaiGqhV0WHAl1TvHzo"
             }
           },
           "GetLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetLambdaVersionuFnfwXSLtME90g9bq7eRHoNgGLsDWhd8FmNot21sk"
+              "Ref": "GetLambdaVersionBmhaWo7dkmi2SRXfeu35n5aakX3d795bPP8dqUfqYI"
             }
           },
           "ListLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ListLambdaVersiontgvvaSoqY8GyukNBUZkDWZoByAoqVhXGSBIrRNnRWsM"
+              "Ref": "ListLambdaVersionAoBFoyQvpesglSREDGlNCmoHFGXllIcj3nCNAhH7Rb8"
             }
           },
           "UpdateLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateLambdaVersionOe2o6ixAprnQ8F1ehY4VJHWvHTDfelMzYMvMkvAAY"
+              "Ref": "UpdateLambdaVersionxLnQHJDryiMkfue92mgKrs7VLFA6koUe659Z3T62Kls"
             }
           },
           "DeleteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteLambdaVersiongucmoDaVZnpm9TrdLks8brj183T7oQLqY6VbFvmZ2Q"
+              "Ref": "DeleteLambdaVersionJlaQ32GNfP2lTpU4OlZJdOxW6Ob0A0CUvyNWTel49Io"
             }
           },
           "BillingLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "BillingLambdaVersionoFKQFQGhTZzaOmM8PCQPmCCDN7jst4CBgHWLLHOwj1k"
+              "Ref": "BillingLambdaVersionu6aAoVtfkMQdqE0qC3nQMoK9Ak3kuX60EEa5RQSak"
             }
           },
           "ServiceEndpoint": {
@@ -1784,7 +1784,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-create",
+        "name": "notes-app-api-dev-create",
         "package": {
           "artifact": ".serverless/create.zip"
         },
@@ -1827,7 +1827,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-get",
+        "name": "notes-app-api-dev-get",
         "package": {
           "artifact": ".serverless/get.zip"
         },
@@ -1870,7 +1870,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-list",
+        "name": "notes-app-api-dev-list",
         "package": {
           "artifact": ".serverless/list.zip"
         },
@@ -1913,7 +1913,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-update",
+        "name": "notes-app-api-dev-update",
         "package": {
           "artifact": ".serverless/update.zip"
         },
@@ -1956,7 +1956,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-delete",
+        "name": "notes-app-api-dev-delete",
         "package": {
           "artifact": ".serverless/delete.zip"
         },
@@ -1999,7 +1999,7 @@
             }
           }
         ],
-        "name": "notes-app-2-api-dev-billing",
+        "name": "notes-app-api-dev-billing",
         "package": {
           "artifact": ".serverless/billing.zip"
         },
@@ -2283,7 +2283,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/notes-app-2-api/dev/1572289141022-2019-10-28T18:59:01.022Z",
+    "artifactDirectoryName": "serverless/notes-app-api/dev/1572291843811-2019-10-28T19:44:03.811Z",
     "artifact": ""
   }
 }

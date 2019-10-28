@@ -1,6 +1,6 @@
 org: gabecampbell
 app: notes-app-api-app
-service: notes-app-2-api
+service: notes-app-api
 
 # Create an optimized package for our functions
 package:
