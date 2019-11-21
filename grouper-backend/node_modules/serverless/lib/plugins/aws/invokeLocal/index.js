@@ -37,7 +37,7 @@ class AwsInvokeLocal {
 
   getRuntime() {
     return (
-      this.options.functionObj.runtime || this.serverless.service.provider.runtime || 'nodejs10.x'
+      this.options.functionObj.runtime || this.serverless.service.provider.runtime || 'nodejs12.x'
     );
   }
 
@@ -128,6 +128,14 @@ class AwsInvokeLocal {
       NODE_PATH: '/var/runtime:/var/task:/var/runtime/node_modules',
     };
 
+    const credentialEnvVars = this.provider.cachedCredentials
+      ? {
+          AWS_ACCESS_KEY_ID: this.provider.cachedCredentials.accessKeyId,
+          AWS_SECRET_ACCESS_KEY: this.provider.cachedCredentials.secretAccessKey,
+          AWS_SESSION_TOKEN: this.provider.cachedCredentials.sessionToken,
+        }
+      : {};
+
     // profile override from config
     const profileOverride = this.provider.getProfile();
     if (profileOverride) {
@@ -136,7 +144,7 @@ class AwsInvokeLocal {
 
     const configuredEnvVars = this.getConfiguredEnvVars();
 
-    _.merge(process.env, lambdaDefaultEnvVars, configuredEnvVars);
+    _.merge(process.env, lambdaDefaultEnvVars, credentialEnvVars, configuredEnvVars);
 
     return BbPromise.resolve();
   }
@@ -160,7 +168,7 @@ class AwsInvokeLocal {
       );
     }
 
-    if (_.includes(['python2.7', 'python3.6', 'python3.7'], runtime)) {
+    if (_.includes(['python2.7', 'python3.6', 'python3.7', 'python3.8'], runtime)) {
       const handlerComponents = handler.split(/\./);
       const handlerPath = handlerComponents.slice(0, -1).join('.');
       const handlerName = handlerComponents.pop();
