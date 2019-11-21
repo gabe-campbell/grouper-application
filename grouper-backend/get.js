@@ -17,6 +17,7 @@ export async function main(event, context) {
     const result = await dynamoDbLib.call("get", params);
     if (result.Item) {
       // Return the retrieved item
+      console.log("Success!");
       return success(result.Item);
     } else {
       return failure({ status: false, error: "Item not found." });

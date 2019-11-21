@@ -55,7 +55,7 @@ export default function Home(props) {
     return (
       <div className="lander">
         <h1>Grouper</h1>
-        <p>Note taking application</p>
+        <p>Group Project Manager</p>
       </div>
     );
   }

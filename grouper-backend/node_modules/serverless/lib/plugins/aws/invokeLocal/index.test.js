@@ -327,6 +327,18 @@ describe('AwsInvokeLocal', () => {
         expect(process.env.NODE_PATH).to.equal('/var/runtime:/var/task:/var/runtime/node_modules');
       }));
 
+    it('it should set credential env vars', () => {
+      provider.cachedCredentials.accessKeyId = 'ID';
+      provider.cachedCredentials.secretAccessKey = 'SECRET';
+      provider.cachedCredentials.sessionToken = 'TOKEN';
+
+      return awsInvokeLocal.loadEnvVars().then(() => {
+        expect(process.env.AWS_ACCESS_KEY_ID).to.equal('ID');
+        expect(process.env.AWS_SECRET_ACCESS_KEY).to.equal('SECRET');
+        expect(process.env.AWS_SESSION_TOKEN).to.equal('TOKEN');
+      });
+    });
+
     it('should fallback to service provider configuration when options are not available', () => {
       awsInvokeLocal.provider.options.region = null;
       awsInvokeLocal.serverless.service.provider.region = 'us-west-1';
@@ -388,7 +400,7 @@ describe('AwsInvokeLocal', () => {
       }));
 
     it('should call invokeLocalNodeJs for any node.js runtime version', () => {
-      awsInvokeLocal.options.functionObj.runtime = 'nodejs10.x';
+      awsInvokeLocal.options.functionObj.runtime = 'nodejs12.x';
       return awsInvokeLocal.invokeLocal().then(() => {
         expect(invokeLocalNodeJsStub.calledOnce).to.be.equal(true);
         expect(
@@ -476,8 +488,8 @@ describe('AwsInvokeLocal', () => {
       });
     });
 
-    it('should call invokeLocalDocker if using --docker option with nodejs10.x', () => {
-      awsInvokeLocal.options.functionObj.runtime = 'nodejs10.x';
+    it('should call invokeLocalDocker if using --docker option with nodejs12.x', () => {
+      awsInvokeLocal.options.functionObj.runtime = 'nodejs12.x';
       awsInvokeLocal.options.functionObj.handler = 'handler.foobar';
       awsInvokeLocal.options.docker = true;
       return awsInvokeLocal.invokeLocal().then(() => {
@@ -1174,7 +1186,7 @@ describe('AwsInvokeLocal', () => {
           handler: 'handler.hello',
           name: 'hello',
           timeout: 4,
-          runtime: 'nodejs10.x',
+          runtime: 'nodejs12.x',
           environment: {
             functionVar: 'functionValue',
           },
@@ -1203,11 +1215,11 @@ describe('AwsInvokeLocal', () => {
         expect(spawnStub.getCall(0).args).to.deep.equal(['docker', ['version']]);
         expect(spawnStub.getCall(1).args).to.deep.equal([
           'docker',
-          ['images', '-q', 'lambci/lambda:nodejs10.x'],
+          ['images', '-q', 'lambci/lambda:nodejs12.x'],
         ]);
         expect(spawnStub.getCall(2).args).to.deep.equal([
           'docker',
-          ['pull', 'lambci/lambda:nodejs10.x'],
+          ['pull', 'lambci/lambda:nodejs12.x'],
         ]);
         expect(spawnStub.getCall(3).args).to.deep.equal([
           'docker',

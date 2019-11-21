@@ -47,6 +47,27 @@ function App(props) {
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
+	    <Nav justify-content-center>
+              {isAuthenticated ? (
+                <>
+                  <LinkContainer to="/calendar">
+                    <NavItem>Calendar</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/files">
+                    <NavItem>Fileshare</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/messenger">
+                    <NavItem>Messenger</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/notes">
+                    <NavItem>Notes</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/scrum">
+                    <NavItem>Scrum</NavItem>
+                  </LinkContainer>
+                </>
+              ) : (<></>)}
+            </Nav>
             <Nav pullRight>
               {isAuthenticated ? (
                 <>
